@@ -45,15 +45,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# ---------- Sidebar Styling ----------
-with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/resume.png", width=150)
-    st.title("📊 ATS Resume Checker")
-    st.markdown("### 💡 Features:")
-    st.markdown("- **Resume Analysis** against job description")
-    st.markdown("- **Percentage Match** with missing keywords")
-    st.markdown("- **Elegant UI with appealing design**")
-    st.markdown("🔹 *Powered by Gemini 1.5 Flash*")
 
 # ---------- Main Layout ----------
 st.header("🚀 ATS Resume Tracker")
@@ -93,7 +84,7 @@ Please share your professional evaluation on whether the candidaye's profile ali
 
 input_prompt3 = """
 You are a skilled ATS (Applicant Tracking System) scanner with deep understanding of any one job role from data science, data analyst, machine learning engineer, AI engineer and deep ATS functionality. 
-Your task is to evaluate the resume against the provided job description. Give me the percentage resumes matches the job description. First the output should come as percentage and then the list of  keywords missing, Spell Check, Grammer Check, suggest improvements in phrasing and last final thoughts.
+Your task is to evaluate the resume against the provided job description. Give me the percentage resumes matches the job description. First the output should come as percentage and then the list of keywords missing, Spell Check, Grammer Check, suggest improvements in phrasing and last final thoughts.
 """
 
 # ---------- Output Display ----------
