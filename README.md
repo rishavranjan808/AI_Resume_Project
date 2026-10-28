@@ -275,5 +275,3 @@ Strong candidate profile with room for ATS optimisation.
 This project is intended for educational and career-development purposes only. The AI-generated feedback and ATS scores are recommendations and should not be considered official recruitment decisions.
 
 ---
-
-⭐ If you find this project useful, consider giving the repository a star.
