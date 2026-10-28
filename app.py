@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
 import io
@@ -12,50 +13,48 @@ import google.generativeai as genai
 # Configure the Gemini API
 genai.configure(api_key=os.getenv("API_KEY"))
 
+
 # ---------- Function to Get Gemini Response ----------
 def get_gemini_response(input, pdf_content, prompt):
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel("gemini-2.5-flash")
     response = model.generate_content([input, pdf_content[0], prompt])
     return response.text
 
+
 # ---------- Function to Process PDF ----------
 def input_pdf_setup(uploaded_file):
-    if uploaded_file is not None: 
+    if uploaded_file is not None:
         images = pdf2image.convert_from_bytes(uploaded_file.read())
         first_page = images[0]
 
         img_byte_arr = io.BytesIO()
-        first_page.save(img_byte_arr, format='JPEG')
+        first_page.save(img_byte_arr, format="JPEG")
         img_byte_arr = img_byte_arr.getvalue()
 
         pdf_parts = [
-            {
-                "mime_type": "image/jpeg",
-                "data": base64.b64encode(img_byte_arr).decode()
-            }
+            {"mime_type": "image/jpeg", "data": base64.b64encode(img_byte_arr).decode()}
         ]
         return pdf_parts
     else:
         raise FileNotFoundError("No file uploaded")
 
+
 # ---------- Streamlit UI ----------
-st.set_page_config(
-    page_title="ATS Resume Checker",
-    page_icon="📄",
-    layout="wide"
-)
+st.set_page_config(page_title="ATS Resume Checker", page_icon="📄", layout="wide")
 
 
 # ---------- Main Layout ----------
 st.header("🚀 ATS Resume Tracker")
-st.write("Use this tool to analyze your resume against job descriptions and identify improvement areas.")
+st.write(
+    "Use this tool to analyze your resume against job descriptions and identify improvement areas."
+)
 
 # Styling the job description text area
 input_texts = st.text_area(
-    "📌 Paste the Job Description Here:", 
+    "📌 Paste the Job Description Here:",
     key="input",
     height=200,
-    placeholder="Paste job description..."
+    placeholder="Paste job description...",
 )
 
 # Upload resume section
@@ -92,7 +91,7 @@ if submit1:
     if uploaded_file is not None:
         pdf_content = input_pdf_setup(uploaded_file)
         response = get_gemini_response(input_prompt1, pdf_content, input_texts)
-        
+
         # Display response in styled box
         st.subheader("💡 Review Summary:")
         st.success("✅ Resume analyzed successfully!")
@@ -105,7 +104,7 @@ elif submit3:
     if uploaded_file is not None:
         pdf_content = input_pdf_setup(uploaded_file)
         response = get_gemini_response(input_prompt3, pdf_content, input_texts)
-        
+
         # Display response in styled box
         st.subheader("📊 Percentage Match Result:")
         st.success("✅ Matching analysis completed!")
